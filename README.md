@@ -1,40 +1,37 @@
-follow this step by step to fully understand and run the application
+**Employee List Application Setup Guide**
+This guide will walk you through the process of setting up and running the Employee List Application. 
+Follow these steps carefully to ensure proper setup of both the backend and frontend components.
 
-To Start use this repository clone it first after you clone open the "Employee.List.App.Client" folder find and open  "EmployeeListApp.Client.sln" solution
-after opening to the visual studion code  at the top of the buttons fine "Tools" find " Nuget Package Manager" under that button find and click Package Manager solution
+**Backend Setup:**
+1. Clone the repository to your local machine.
+2. Navigate to the "Employee.List.App.Client" folder.
+3. Open the "EmployeeListApp.Client.sln" solution in Visual Studio.
+4. Set up the database:
+    a. In Visual Studio, go to Tools > NuGet Package Manager > Package Manager Console.
+    b. Change the default project to "EmployeeListApp.DataAccess".
+    c. Run the following commands:
+    "Add-Migration InitialMigration"
+    "Update-Database"
+   
+    Note: If you encounter issues, try this alternative command:
+    "Add-Migration InitialMigration -Project EmployeeListApp.DataAccess"
 
-Change first the default project to "EmployeeListApp.DataAccess"
-before running this command
-
-" Add-Migration <NameOfMigration> "
-Update-Database
-
-Or run this if cannot find change project default.
-"Add-Migration <NameOfMigration> -Project EmployeeListApp.DataAccess"
-
-Note change the <NameOfMigration> with your desired migration name 
-
-after migration open SQl Server Management Studion  run this sql script " CREATE PROCEDURE dbo.sp_SearchEmployees
-    @searchPattern NVARCHAR(100)
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    SELECT 
-        EmployeeId,
-        FirstName,
-        LastName,
-        MiddleName,
-        Email,
-        Address,
-        PhoneNumber,
-        Salary,
-        Status,
-        Gender
-    FROM 
-        dbo.Employees
-    WHERE 
-        LOWER(CONCAT(
+5. Set up the stored procedure:
+    a. Open SQL Server Management Studio.
+    b. Connect to your database.
+    c. Execute the following SQL script to create the stored procedure:
+    
+    USE EmployeeDb;
+    GO
+    
+    CREATE PROCEDURE dbo.sp_SearchEmployees
+        @searchPattern NVARCHAR(100)
+    AS
+    BEGIN
+        SET NOCOUNT ON;
+        SELECT EmployeeId, FirstName, LastName, MiddleName, Email, Address, PhoneNumber, Salary, Status, Gender
+        FROM dbo.Employees
+        WHERE LOWER(CONCAT(
             COALESCE(FirstName, ''),
             COALESCE(LastName, ''),
             COALESCE(MiddleName, ''),
@@ -42,14 +39,19 @@ BEGIN
             COALESCE(Address, ''),
             COALESCE(PhoneNumber, '')
         )) LIKE '%' + LOWER(@searchPattern) + '%'
-    ORDER BY 
-        LastName, FirstName;
-END
-" to create stored procedure
+        ORDER BY LastName, FirstName;
+    END
 
-You may now run the  "EmployeeListApp.Client" project 
+6. Run the "EmployeeListApp.Client" project in Visual Studio.
 
+**Frontend Setup**
 
-Now for the front end or UI open the "employee-list-app.UI folder" click the location path and open in cmd and type "ng serve" and access its local host or url to "" if open in vs code at the top button click "Terminal" and click "New Terminal" type "ng serve" and access its url to .
+7. Navigate to the "employee-list-app.UI" folder.
+8. Open a terminal in this folder.
+9. Run the following command to start the Angular development server: "ng serve"
 
-make sure to run first the web api or "EmployeeListApp.Client". and thats it you may now use the application
+Access the application by opening a web browser and navigating to http://localhost:4200 (or the URL provided in the terminal).
+
+**Important Notes**
+1. Ensure that the backend API (EmployeeListApp.Client) is running before starting the frontend.2
+2. If you encounter any issues, double-check that all steps have been followed correctly and that all necessary dependencies are installed.
