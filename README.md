@@ -53,5 +53,5 @@ Follow these steps carefully to ensure proper setup of both the backend and fron
 Access the application by opening a web browser and navigating to http://localhost:4200 (or the URL provided in the terminal).
 
 **Important Notes**
-1. Ensure that the backend API (EmployeeListApp.Client) is running before starting the frontend.2
+1. Ensure that the backend API (EmployeeListApp.Client) is running before starting the frontend.
 2. If you encounter any issues, double-check that all steps have been followed correctly and that all necessary dependencies are installed.
